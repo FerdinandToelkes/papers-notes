@@ -1,0 +1,537 @@
+\documentclass[../../main.tex]{subfiles}
+% NOTE: if your master document isn't called main.tex / isn't one directory up,
+% adjust the path in the line above accordingly.
+
+\usepackage{booktabs}              % for \toprule/\midrule/\bottomrule in the
+                                    % coefficient tables below (harmless if the
+                                    % master preamble already loads it too)
+\providecommand{\ad}{\mathrm{ad}}  % falls back to a local definition if the
+                                    % master preamble doesn't already provide it
+
+\begin{document}
+
+\section{Cavity Light-Matter Entanglement through Quantum Fluctuations - Passetti et al.}
+\label{sec:passetti2022}
+
+\subsection*{Source}
+G.\ Passetti, C.\,J.\ Eckhardt, M.\,A.\ Sentef, D.\,M.\ Kennes,
+\emph{Cavity Light-Matter Entanglement through Quantum Fluctuations},
+arXiv:2212.03011 (2022). 
+
+
+
+\subsection{Derivation of the Hamiltonian}
+\label{subsec:passetti2022-model}
+
+Within this section, we want to show where the Hamiltonian in equation (1) of the Passetti paper is coming from. The Hamiltonian is
+\begin{align}
+H&=-t_h\sum_{j=1}^{L}\left(
+e^{i\frac{g}{\sqrt L}(a^\dagger+a)}c_j^\dagger c_{j+1}
++\mathrm{H.c.}\right)+\Omega a^\dagger a+H_{\mathrm{int}},
+\label{eq:passetti2022-claim}\\
+H_{\mathrm{int}}&=U\sum_{j=1}^{L}
+\left(n_j-\frac12\right)\left(n_{j+1}-\frac12\right).
+\end{align}
+
+\subsection*{Hubbard model}
+
+The book by Nolting -- part seven -- shows a nice derivation of the Hubbard model, which yields (see (2.117) in Nolting part 7)
+\begin{align}
+H&=\sum_{ij\sigma}T_{ij}c_{i\sigma}^\dagger c_{j\sigma}
+%+\frac12 U\sum_{i,\sigma}\hat n_{i\sigma}\hat n_{i,-\sigma}
++ H_{ee}^{(1)}
+\notag\\
+&=
+\sum_{\langle ij\rangle\sigma}T_{ij}c_{i\sigma}^\dagger c_{j\sigma}
+%+\frac12 U\sum_{i,\sigma}\hat n_{i\sigma}\hat n_{i,-\sigma},
++ H_{ee}^{(1)}
+\end{align}
+where we restricted the sum to nearest neighbor hoppings in the second equality. The electronic interaction $H_{ee}^{(1)}$ contains only on site interactions, which means that the overlap integrals
+\begin{equation}
+\begin{aligned}
+V(ij, k \ell)&=\frac{e^2}{4\pi\varepsilon_0}
+\int d^3r_1\,d^3r_2\;
+w_\sigma^*(r_1-R_i)w_{\sigma'}^*(r_2-R_j)
+\frac{1}{|r_1-r_2|}\\
+&\hspace{35mm}\times
+w_{\sigma'}(r_2-R_k)w_\sigma(r_1-R_\ell).
+\end{aligned}
+\qquad\begin{gathered}
+\sim(2.115)\\
+\text{but using}\\
+\text{Wannier fcts.}
+\end{gathered}
+\end{equation}
+were simplified to
+\begin{equation}
+V(ij,k \ell)=
+\begin{cases}
+U_1&\text{if }i=j=k=\ell,\\
+0&\text{else}
+\end{cases}
+\quad =\delta_{ij}\delta_{jk}\delta_{k\ell}\,U_1.
+\end{equation}
+Plugging it into the interaction part yields
+\begin{align}
+H_{ee}^{(1)}
+&\overset{\substack{(2.114)\\\text{Nolting}}}{=}
+\frac12\sum_{\substack{ijk\ell\\\sigma,\sigma'}}
+V^{(1)}(ij,k \ell)
+c_{i\sigma}^\dagger c_{j\sigma'}^\dagger
+c_{k\sigma'}c_{\ell\sigma}
+\notag\\
+&=\frac12 U_1\sum_{i,\sigma,\sigma'}
+c_{i\sigma}^\dagger c_{i\sigma'}^\dagger
+\underbrace{c_{i\sigma'} c_{i\sigma}}_{
+\substack{\text{only non-zero for }\sigma'\ne\sigma}}
+\notag\\
+&=\frac12 U_1\sum_{i,\sigma}
+c_{i\sigma}^\dagger c_{i\bar\sigma}^\dagger
+c_{i\bar\sigma}c_{i\sigma}
+\qquad(\bar\sigma=-\sigma)
+\notag\\
+&=\frac12 U_1\sum_{i,\sigma}
+c_{i\sigma}^\dagger c_{i\sigma}
+c_{i\bar\sigma}^\dagger c_{i\bar\sigma}
+\notag\\
+&=\frac12 U_1\sum_{i,\sigma}n_{i\sigma}n_{i\bar\sigma}.
+\label{eq:passetti2022-onsite}
+\end{align}
+
+\subsection*{Extended Hubbard model}
+Since we will be interested in spinless fermions, we also examine interactions between neighboring sites. This is therefore called \emph{extended} Hubbard model. We only look at processes that do not change the spin of the particles. Thus,
+\begin{align}
+V(ij,k \ell)&=
+\int d^3r_1\,d^3r_2\;
+w_\sigma^*(r_1-R_i)w_{\sigma'}^*(r_2-R_j)
+\frac{1}{|r_1-r_2|}
+\notag\\
+&\hspace{35mm}\times
+w_{\sigma'}(r_2-R_k) w_\sigma(r_1-R_\ell)
+\notag\\
+&\underset{\substack{i=\ell,\;j=k\\j=\mathrm{NN}(i)}}{=}
+\int d^3r_1\,d^3r_2\;
+|w_\sigma(r_1-R_i)|^2|w_{\sigma'}(r_2-R_j)|^2
+\frac{1}{|r_1-r_2|}
+\notag\\
+&\equiv\delta_{i\ell}\delta_{jk}\delta_{i,\mathrm{NN}(j)}\,U_2.
+\label{eq:passetti2022-nn-matrix}
+\end{align}
+This yields another interaction term
+\begin{align}
+H_{ee}^{(2)}
+&\overset{\substack{(2.114)\\\text{Nolting}}}{=}
+\frac12\sum_{\substack{ijk\ell\\\sigma,\sigma'}}
+V^{(2)}(ij,\ell k)
+c_{i\sigma}^\dagger c_{j\sigma'}^\dagger
+c_{k\sigma'}c_{\ell\sigma}
+\notag\\
+&=\frac{U_2}{2}\sum_{\substack{ijk\ell\\\sigma,\sigma'}}
+\delta_{i\ell}\delta_{jk}\delta_{i,\mathrm{NN}(j)}
+c_{i\sigma}^\dagger c_{j\sigma'}^\dagger
+c_{k\sigma'}c_{\ell\sigma}
+\notag\\
+&=\frac{U_2}{2}\sum_{\langle ij\rangle,\sigma\sigma'}
+c_{i\sigma}^\dagger c_{j\sigma'}^\dagger
+c_{j\sigma'}c_{i\sigma}
+\notag\\
+&\underset{i\ne j}{=}\frac{U_2}{2}
+\sum_{\langle ij\rangle,\sigma\sigma'}n_{i\sigma}n_{j\sigma'}.
+\label{eq:passetti2022-nearest-neighbour}
+\end{align}
+This finally results in
+\begin{equation}
+H=
+\sum_{\langle ij\rangle\sigma}T_{ij}c_{i\sigma}^\dagger c_{j\sigma}
++\frac12 U_1\sum_{i,\sigma}n_{i\sigma}n_{i\bar\sigma} 
++\frac12 U_2\sum_{\substack{\langle ij\rangle\\\sigma\sigma'}}
+n_{i\sigma}n_{j\sigma'}.
+\end{equation}
+
+\subsection*{Spinless fermions}
+
+The $n_{i\sigma}n_{i\bar\sigma}$-term vanishes and therefore, with $U_2=U$,
+\begin{equation}
+H=
+\sum_{\langle ij\rangle}T_{ij}c_i^\dagger c_j
++\frac12 U\sum_{\langle ij\rangle}n_i n_j.
+\label{eq:passetti2022-spinless}
+\end{equation}
+
+\subsection*{Rewrite interaction term}
+For periodic boundary conditions and if the number of particles is conserved, we can do the following rewriting
+\begin{align}
+H_{\text{int,centered}} &= \sum_{\langle ij\rangle}\left(n_i-\frac12\right)\left(n_j-\frac12\right) \\
+&=\sum_{\vec r_i} \sum_{\alpha=x,y,z}
+\left[n_{\vec r_i} n_{\vec r_i + \hat e_\alpha}
+-\frac12(n_{\vec r_i} + n_{\vec r_i + \hat e_\alpha})+\frac14\right]
+\notag\\
+&=H_{\text{int,uncent.}}
+- \frac12 N +\frac B4 - \frac12 \sum_{\vec r_i} (n_{\vec r_i + \hat e_x} + n_{\vec r_i + \hat e_y} +n_{\vec r_i + \hat e_z} ) 
+\notag\\
+&=H_{\text{int,uncent.}}
+- \frac12 N +\frac B4 - \frac32 N =H_{\text{int,uncent.}}
+- 2 N +\frac B4,
+\notag\\
+\label{eq:passetti2022-centering}
+\end{align}
+where $B$ is the number of bonds of the underlying lattice. Due to particle number conservation, the centered and not centered version of the interaction term only differ by a constant offset. If the particle number is not conserved, this leads to the notion of a chemical potential. This constant shift is irrelevant for the physics of the system. This does not in general hold for open boundary conditions, which can be easily seen for a one dimensional system for instance. The extended Hubbard model for spinless fermions thus reads
+\begin{equation}
+H=
+\sum_{\langle ij\rangle}T_{ij}c_i^\dagger c_j
++\sum_{\langle ij\rangle}\left(n_i-\frac12\right)\left(n_j-\frac12\right)
+\quad(+C) .
+\label{eq:passetti2022-electronic-centered}
+\end{equation}
+
+\subsection*{Introduce light-matter interaction via scheme presented by Dmytruk and Schiro}
+The general idea to introduce the coupling between light and matter that Schiro and Dmytruk implemented goes as follows. The light-matter interaction is introduced via minimal coupling $-i\nabla \rightarrow -i\nabla e \bm A(\bm r)$ in the continuum, which yields
+\begin{align}
+    \mathcal H_C &= \mathcal H_0 + \mathcal H_{ee} + \mathcal H_{\text{ph}} \qquad \text{with} \\
+    \mathcal H_0 &= \int d \bm r \, \psi^\dagger(\bm r) \left( \frac{(-i\nabla + e\bm A(\bm r))^2}{2m} + V(\bm r) \right) \psi(\bm r) , \\
+    \mathcal H_{ee} &= \int d \bm r d \bm r \, \psi^\dagger(\bm r) \psi^\dagger(\bm r') U(\bm r - \bm r') \psi(\bm r') \psi(\bm r) , \\
+    \mathcal H_{\text{ph}} &= \int d \bm r \, \bm \Pi(\bm r)^2 + (\nabla \times \bm A(\bm r))^2 .
+\end{align}
+They show, that this replacement can also be achieved by performing a unitary transformation on the matter degrees of freedom of the system only, i.e., 
+\begin{align}
+    \mathcal H_C &= \mathcal H_{\text{ph}} + \mathcal U^\dagger (\mathcal H_0 + \mathcal H_{ee}) \mathcal U \qquad \text{where} \\
+    \mathcal U(\chi) &= \exp\left[ i(a+a^\dagger) \int d\vec r \psi^\dagger(\bm r) \chi(\bm r)\psi(\bm r) \right], \\
+    \nabla \chi(\bm r) &= e \bm A_0(\bm r) .
+\end{align} 
+They project the matter Hamiltonian to a set of low energy states and then apply the unitary transformation $\mathcal U \rightarrow U$, which itself has also been projected. 
+
+There are apparently drawbacks with the approach presented by Dmytruk and Schiro but they do not manifest for 1d systems with only one band. For a complemented approach, look at the paper \emph{Electromagnetic coupling in tight-binding models for strongly correlated light and matter} by Li and Eckstein et al.
+
+\paragraph{Unitary transformation on the electronic part of the Hamiltonian in the Coulomb gauge}
+
+\begin{equation}
+U^\dagger(\chi)c_{\bm R\mu}U(\chi)
+=e^{i(a+a^\dagger)\chi(\bm R)}c_{\bm R\mu}
+\qquad\text{(S29, 36--38)}
+\label{eq:passetti2022-local-phase}
+\end{equation}
+\begin{equation}
+\Rightarrow\quad U^\dagger c_{\bm R\mu}^\dagger c_{\bm R'\mu'}U
+=e^{i(a+a^\dagger)(\chi(\bm R')-\chi(\bm R))}
+c_{\bm R\mu}^\dagger c_{\bm R'\mu'}
+\end{equation}
+where
+\begin{align}
+\chi(\bm R')-\chi(\bm R)
+&\overset{\text{(S14)}}{=}
+\int_{\gamma(\bm r^*,\bm R')}A(\bm s)\,d\bm s
+-\int_{\gamma(\bm r^*,\bm R)}A(\bm s)\,d\bm s
+\notag\\
+&=\int_{\bm R}^{\bm R'}A(\bm s)\,d\bm s
++\int_{\Gamma(\bm r^*,\bm R,\bm R')}A(\bm s)\,d\bm s.
+\label{eq:passetti2022-path-difference}
+\end{align}
+
+% \begin{center}
+% \setlength{\unitlength}{1pt}
+% \begin{picture}(260,95)
+% \put(20,17){\circle*{3}}
+% \put(130,75){\circle*{3}}
+% \put(235,17){\circle*{3}}
+% \put(9,3){$\bm R$}
+% \put(120,81){$\bm R'$}
+% \put(238,3){$\bm r^{\,*}$}
+% \qbezier(20,17)(80,55)(130,75)
+% \qbezier(130,75)(190,90)(235,17)
+% \qbezier(20,17)(45,43)(78,18)
+% \qbezier(78,18)(130,-4)(170,28)
+% \qbezier(170,28)(218,53)(235,17)
+% \put(110,40){$\Gamma(\bm r^*,\bm R,\bm R')$}
+% \put(125,0){$\gamma(\bm r^*,\bm R)$}
+% \put(180,76){$\gamma(\bm r^*,\bm R')$}
+% \end{picture}
+% \end{center}
+
+In one dimension, the line integral simplifies to 
+
+\begin{align}
+\Rightarrow\quad\chi(R')-\chi(R)
+&=\int_R^{R'}A(s)\,ds
+\notag\\
+&\underset{\substack{A(s)=A\;\text{dipole approx.}\\+\,1d\;\mathrm{NN}}}{=}
+A(j+1-j)=A
+\end{align}
+\begin{equation}
+\Rightarrow\quad U^\dagger c_j^\dagger c_{j+1}U
+=e^{ig(a+a^\dagger)}c_j^\dagger c_{j+1}
+\qquad\sim\text{(S44)}
+\end{equation}
+and
+\begin{equation}
+U^\dagger n_j U=n_j,\qquad\text{since }\int_R^R A(s)\,ds=0
+\end{equation}
+\begin{equation}
+\begin{aligned}
+\Rightarrow\quad H_C
+&\overset{\substack{\text{S44 in 1d}}}{=}
+\omega_c a^\dagger a
++\sum_j t_{j,j+1}\left(
+e^{ig(a+a^\dagger)}c_j^\dagger c_{j+1}+\mathrm{H.c.}\right)
+\end{aligned}
+\label{eq:passetti2022-coulomb}
+\end{equation}
+
+Combining \cref{eq:passetti2022-coulomb,eq:passetti2022-electronic-centered} finally yields
+\begin{equation}
+\begin{aligned}
+H=&-t_h\sum_{j=1}^{L}\left(
+e^{i\frac{g}{\sqrt L}(a^\dagger+a)}c_j^\dagger c_{j+1}
++\mathrm{H.c.}\right)+\Omega a^\dagger a &\qquad\text{(P1)}\\
+&+U\sum_{j=1}^{L}\left(n_j-\frac12\right)
+\left(n_{j+1}-\frac12\right)
+&\qquad\text{(P8)}
+\end{aligned}
+\label{eq:passetti2022-derived-model}
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Appendix I: High-frequency expansion} 
+\label{subsec:passetti2022-high-frequency}
+
+\subsection*{Roadmap}
+This note reconstructs, with every intermediate step shown, the road from the
+main-text Hamiltonian Eq.~(1) to the Supplemental Material's transformed
+Hamiltonian Eq.~(S3) and renormalized frequency Eq.~(S4):
+\begin{center}
+Eq.~(1) $\xrightarrow{\text{Taylor expand Peierls phase, }O(g^2)}$ Eq.~(S1)
+$\xrightarrow{\text{displace}} h'(j,t)
+\xrightarrow{\text{squeeze}}$ Eq.~(S3), Eq.~(S4).
+\end{center}
+The Hadamard-lemma machinery used in Steps~3--4 is general-purpose and is
+derived in full in the note \emph{Similarity Transformations of Operators:
+Computing $e^{A}Be^{-A}$} in the general reference-notes project; here we only
+recall the results needed and apply them to this specific Hamiltonian. Main-text equations are cited as Eq.~(n); equations
+from the Supplemental Material are cited as Eq.~(Sn).
+
+\subsection*{Starting point: the model Hamiltonian}
+
+Eq.~(1) of the main text describes a chain of $L$ spinless fermions,
+nearest-neighbour hopping $t_h$ and interaction $U$, Peierls-coupled to a
+single cavity mode of frequency $\Omega$ via the (spatially uniform, $q_x=0$)
+mode with coupling $g$:
+\begin{equation}
+H=-t_h\sum_{j=1}^{L}\left(e^{i\frac{g}{\sqrt L}(a^\dagger+a)}c_j^\dagger c_{j+1}
++\mathrm{h.c.}\right)
++U\sum_{j=1}^{L}\left(n_j-\tfrac12\right)\left(n_{j+1}-\tfrac12\right)
++\Omega a^\dagger a. \label{eq:maintext1}
+\end{equation}
+Only the hopping term carries $g$-dependence; the interaction and bare photon
+terms are untouched by the Peierls substitution.
+
+\subsection*{Step 1: expanding the Peierls phase to quadratic order in \textit{g}}
+\label{sec:step1-expansion}
+
+Write $\theta\equiv\dfrac{g}{\sqrt L}(a^\dagger+a)$. Since $\theta^\dagger=\theta$, $(e^{i\theta})^\dagger
+=e^{-i\theta}$, so the hopping term of Eq.~\eqref{eq:maintext1} is
+\begin{equation}
+-t_h\sum_j\left(e^{i\theta}c_j^\dagger c_{j+1}+e^{-i\theta}c_{j+1}^\dagger c_j\right).
+\end{equation}
+Taylor-expand each exponential to $O(\theta^2)$:
+\begin{equation}
+e^{\pm i\theta}=1\pm i\theta-\frac{\theta^2}{2}+O(\theta^3).
+\end{equation}
+Substituting and collecting by power of $\theta$:
+\begin{align}
+&-t_h\sum_j\left[\left(1+i\theta-\tfrac{\theta^2}2\right)c_j^\dagger c_{j+1}
++\left(1-i\theta-\tfrac{\theta^2}2\right)c_{j+1}^\dagger c_j\right]\notag\\
+=\;&\underbrace{-t_h\sum_j\left(c_j^\dagger c_{j+1}+c_{j+1}^\dagger c_j\right)}_{\theta^0}
+\;\underbrace{-\,it_h\theta\sum_j\left(c_j^\dagger c_{j+1}-c_{j+1}^\dagger c_j\right)}_{\theta^1}
+\;\underbrace{+\,\frac{t_h\theta^2}{2}\sum_j\left(c_j^\dagger c_{j+1}+c_{j+1}^\dagger c_j\right)}_{\theta^2}
++O(\theta^3). \label{eq:taylorexpand}
+\end{align}
+
+Define the kinetic-energy and current operators exactly as in the main text,
+\begin{equation}
+T\equiv-t_h\sum_j\left(c_j^\dagger c_{j+1}+c_{j+1}^\dagger c_j\right),
+\qquad
+J\equiv-it_h\sum_j\left(c_j^\dagger c_{j+1}-c_{j+1}^\dagger c_j\right).
+\end{equation}
+Using $c_j^\dagger = \frac{1}{\sqrt{L}}\sum_{k} e^{-ikj} c_k^\dagger$ with $k=\frac{2\pi m}{L}, m=0,\dots L-1$:
+\begin{equation}
+T=-2t_h\sum_k \cos(k) c_k^\dagger c_k,
+\qquad
+J=2t_h\sum_k \sin(k) c_k^\dagger c_k.
+\end{equation}
+The dispersion relation for the non-interacting case ($U=g=0$) is $\epsilon(k) = -2t_h \cos(k)$ and thus the group velocity of each electron is (see Bartelmann for example) $v_g(k) = \frac{\partial \epsilon(k)}{\partial k} = 2t_h \sin(k)$. Therefore, $J$ is truly a current operator (remember that $e=1$). Alternatively, this identification can be argued since $J$ couples linearly to the vector potential $A\propto a^\dagger + a$ in the Hamiltonian, just as in classical electrodynamics (compare to Bartelmann part 2).
+The $\theta^0$ term is exactly $T$; the $\theta^2$ term equals
+$-\tfrac{\theta^2}{2}T$, since $t_h\sum_j(c_j^\dagger c_{j+1}+\mathrm{h.c.})=-T$.
+So Eq.~\eqref{eq:taylorexpand} becomes
+\begin{equation}
+T+\theta J-\frac{\theta^2}{2}T+O(\theta^3).
+\end{equation}
+Substituting $\theta=\dfrac{g}{\sqrt L}(a^\dagger+a)$,
+\begin{equation}
+\theta J=\frac{g}{\sqrt L}(a^\dagger+a)J,\qquad
+\frac{\theta^2}{2}T=\frac{g^2}{2L}(a^\dagger+a)^2T,
+\end{equation}
+and adding back the untouched interaction and photon terms from
+Eq.~\eqref{eq:maintext1} gives exactly Eq.~(S1) of the Supplemental Material:
+\begin{equation}
+\boxed{\,H^{g^2}=\Omega a^\dagger a+T+H_{\mathrm{int}}
++\frac{g}{\sqrt L}(a^\dagger+a)J-\frac{g^2}{2L}(a^\dagger+a)^2T\,}
+\qquad\text{[Eq.~(S1)]}
+\label{eq:Hg2}
+\end{equation}
+with $H_{\mathrm{int}}=U\sum_j(n_j-\tfrac12)(n_{j+1}-\tfrac12)$. This
+truncation is controlled: the dropped terms are $O(\theta^3)=O(g^3)$, and are
+parametrically small in the regime the paper works in, $gt_h\ll\Omega$.
+
+\subsection*{Step 2: reducing to a family of photon-only Hamiltonians}
+\label{sec:step2-reduction}
+
+$T$ and $J$ commute, $[T,J]=0$ since both are diagonal in the same momentum-space
+single-particle basis, and both trivially commute with the photon operators
+$a,a^\dagger$ (different tensor factors). Furthermore, one can show that the interaction term 
+$H_{\mathrm{int}}$ transforms under displacement and squeezing as 
+$H_{\mathrm{int}} \rightarrow H_{\mathrm{int}} + O(\frac{1}{\Omega})$. 
+Since the terms $O(\frac{1}{\Omega})$ are also dropped, $H_{\mathrm{int}}$ transforms trivially. 
+So, restrict to a simultaneous
+eigenspace $|j,t\rangle$ of $(J,T)$ with eigenvalues $(j,t)$, everything in
+Eq.~\eqref{eq:Hg2} except $H_{\mathrm{int}}$ becomes an ordinary
+(c-number-parametrized) bosonic Hamiltonian:
+\begin{equation}
+h(j,t)=\Omega a^\dagger a+\frac{g}{\sqrt L}j\,(a^\dagger+a)
+-\frac{g^2}{2L}t\,(a^\dagger+a)^2. \label{eq:hjt}
+\end{equation}
+Equation~\eqref{eq:hjt} is accordingly the object to diagonalize in the photon
+sector only.
+
+\subsection*{Step 3: displacement transformation}
+\label{sec:step3-displacement}
+
+Define $\mathcal D\equiv e^{S^d}$, $S^{d}=\alpha(a^\dagger-a)$ with $\alpha$
+a real number (later fixed as a function of $j$). Since $[S^d,a]=-\alpha$ is a
+c-number, the Hadamard series truncates exactly:
+\begin{equation}
+e^{S^d}a\,e^{-S^d}=a-\alpha,\qquad e^{S^d}a^\dagger e^{-S^d}=a^\dagger-\alpha.
+\end{equation}
+Applying this to Eq.~\eqref{eq:hjt} and keeping terms to $O(g^2)$ (dropping the
+$O(g^3)$ piece generated by displacing the $(a^\dagger+a)^2$ term, consistent
+with the truncation of Eq.~\eqref{eq:Hg2} itself):
+\begin{equation}
+e^{S^d}h(j,t)e^{-S^d}=\Omega a^\dagger a
+-\Omega\alpha(a^\dagger+a)+\frac{g}{\sqrt L}j(a^\dagger+a)
+-\frac{g^2}{2L}t(a^\dagger+a)^2
++\left(\Omega\alpha^2-\frac{2g}{\sqrt L}j\alpha\right)+O(g^3).
+\end{equation}
+Killing the linear term fixes
+\begin{equation}
+\boxed{\;\alpha(j)=\frac{g}{\Omega\sqrt L}\,j\;}\qquad\text{[cf. Eq.~(S2)]},
+\end{equation}
+and the constant collapses to $\Omega\alpha^2-2\Omega\alpha^2=-\Omega\alpha^2
+=-\dfrac{g^2j^2}{\Omega L}$, giving
+\begin{equation}
+h'(j,t)\equiv e^{S^d}h(j,t)e^{-S^d}
+=\Omega a^\dagger a-\frac{g^2t}{2L}(a^\dagger+a)^2
+-\frac{g^2j^2}{\Omega L}+O(g^3). \label{eq:hprime}
+\end{equation}
+
+\subsection*{Step 4: squeezing transformation}
+\label{sec:step4-squeezing}
+
+Define $\mathcal S\equiv e^{S^{\mathrm{sq}}}$, $S^{\mathrm{sq}}=\tfrac{\xi}{2}
+(a^2-a^{\dagger2})$; $\xi=\xi(t)$ is to be fixed by requiring the transformed
+Hamiltonian is diagonal in $a^\dagger a$.
+
+\paragraph{Transforming $a$ and $a^\dagger$ (Hadamard lemma).}
+Using $[AB,C]=A[B,C]+[A,C]B$: $[S^{\mathrm{sq}},a]=\xi a^\dagger$,
+$[S^{\mathrm{sq}},a^\dagger]=\xi a$. Iterating (even orders return $\xi^{2k}a$,
+odd orders return $\xi^{2k+1}a^\dagger$; check for instance via Python's Sympy) and summing the resulting series:
+\begin{equation}
+e^{S^{\mathrm{sq}}}a\,e^{-S^{\mathrm{sq}}}=a\cosh\xi+a^\dagger\sinh\xi,
+\qquad
+e^{S^{\mathrm{sq}}}a^\dagger e^{-S^{\mathrm{sq}}}=a^\dagger\cosh\xi+a\sinh\xi.
+\label{eq:aTsq}
+\end{equation}
+
+\paragraph{Transforming $a^\dagger a$ and $(a^\dagger+a)^2$.}
+Using $e^S(XY)e^{-S}=(e^SXe^{-S})(e^SYe^{-S})$
+on Eq.~\eqref{eq:aTsq} and normal-ordering with $aa^\dagger=a^\dagger a+1$:
+\begin{align}
+e^{S^{\mathrm{sq}}}(a^\dagger a)e^{-S^{\mathrm{sq}}}
+&=a^\dagger a\,\cosh(2\xi)+\sinh^2\xi+\tfrac12\sinh(2\xi)\big(a^2+a^{\dagger2}\big),
+\label{eq:numtransform}\\
+e^{S^{\mathrm{sq}}}(a^\dagger+a)^2e^{-S^{\mathrm{sq}}}
+&=e^{2\xi}\big(a^{\dagger2}+a^2+2a^\dagger a+1\big). \label{eq:sqtransform}
+\end{align}
+The rewriting was done using $\cosh^2(x) + \sinh^2(x) = \cosh(2x)$, $2\sinh(x)\cosh(x) = \sinh(2x)$ and the definition of both functions via the exponential function.
+
+\paragraph{Assembling and diagonalizing.} Substituting
+Eqs.~\eqref{eq:numtransform}--\eqref{eq:sqtransform} into $h'(j,t)$,
+Eq.~\eqref{eq:hprime}, and collecting terms:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Operator & Coefficient \\
+\midrule
+$a^\dagger a$ & $\Omega\cosh(2\xi)-\dfrac{g^2t}{L}e^{2\xi}$ \\[2mm]
+$a^2+a^{\dagger2}$ & $\dfrac{\Omega}{2}\sinh(2\xi)-\dfrac{g^2t}{2L}e^{2\xi}$ \\[2mm]
+const. & $\Omega\sinh^2\xi-\dfrac{g^2t}{2L}e^{2\xi}-\dfrac{g^2j^2}{\Omega L}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Requiring the $(a^2+a^{\dagger2})$ coefficient to vanish,
+$\Omega\sinh(2\xi)=\dfrac{g^2t}{L}e^{2\xi}$, solved via
+$e^{4\xi}=\left(1-\dfrac{2g^2t}{\Omega L}\right)^{-1}$:
+\begin{equation}
+\xi(t)=-\frac14\ln\!\left(1-2\frac{g^2}{\Omega}\frac tL\right).
+\label{eq:xiresult}
+\end{equation}
+
+\paragraph{Remark: discrepancy with the printed Supplemental Material formula.}
+The Supplemental Material states $\xi(t)=\tfrac12\ln\!\left(1-2\tfrac{g^2}{\Omega}
+\tfrac tL\right)$, a factor of $-2$ different from Eq.~\eqref{eq:xiresult}. This
+looks like a transcription slip in the supplement. It does not affect
+Eq.~(S4) below, which depends only on $\xi^2$-type combinations.
+
+\subsection*{Assembling the result: Eq.~(S3) and the renormalized frequency Eq.~(S4)}
+\label{sec:assembling}
+
+Plug Eq.~\eqref{eq:xiresult} back into the $a^\dagger a$ coefficient. With
+$\frac{g^2 t}{L} = \frac{\Omega}{2}(1-e^{-4\xi})$:
+\begin{equation}
+\tilde\Omega=\Omega\cosh(2\xi)-\frac{g^2t}{L}e^{2\xi}
+=\frac{\Omega}{2}\left(e^{2\xi} + e^{-2\xi}\right)
+-\frac{g^2 t}{L}e^{2\xi}
+=\Omega\,e^{-2\xi},
+\end{equation}
+i.e.
+\begin{equation}
+\boxed{\;\tilde\Omega=\Omega\sqrt{1-2\dfrac{g^2}{\Omega}\dfrac{t}{L}}\;}
+\qquad\text{[Eq.~(S4), with }t\to\langle T\rangle\text{]}.
+\label{eq:OmegaTilde}
+\end{equation}
+This matches the paper exactly. The displaced and squeezed Hamiltonian in the photon sector thus reads
+
+\begin{equation}
+    \tilde \Omega a^\dagger a + \frac{\tilde \Omega - \Omega}{2} - \frac{g^2 j^2}{\Omega L} = \tilde \Omega a^\dagger a + O (\frac{1}{\Omega})
+\end{equation}
+
+Reattaching the fermionic sector, the fully assembled transformed
+Hamiltonian is Eq.~(S3):
+\begin{align}
+\tilde H^{g^2}&=\tilde\Omega a^\dagger a+T+H_{\mathrm{int}} \\
+&=\tilde\Omega \beta^\dagger\beta+T+H_{\mathrm{int}}
+\qquad\text{[Eq.~(S3)]},
+\end{align}
+where $\beta$ is the new (squeezed, displaced) photon annihilation operator,
+and $\tilde\Omega$ depends on the fermionic sector only through $t=\langle T\rangle$
+(and reduces to $\Omega$ at $O(g^0)$, as it must). The first line, describes the transformed Hamiltonian in the original photon basis, whereas the second line describes it in the displaced and squeezed basis, and therefore $\beta = e^{S^\mathrm{sq}} e^{S^\mathrm{d}} a e^{-S^\mathrm{sq}} e^{-S^\mathrm{d}}$. As emphasized in
+Sec.~\ref{sec:step2-reduction}, the appearance of $H_{\mathrm{int}}$ unchanged
+here is a leading-order statement in $1/\Omega$, not an exact operator
+identity.
+
+\subsection*{See also}
+For the general-purpose machinery reused in Steps~\ref{sec:step3-displacement}
+and \ref{sec:step4-squeezing} (the Hadamard lemma, the multiplicativity trick,
+the dagger shortcut, and the equivalent differential-equation/generator-flow
+formulation), see the note \emph{Similarity Transformations of Operators:
+Computing $e^{A}Be^{-A}$} in the general reference-notes project.
+
+\end{document}
