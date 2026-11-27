@@ -1,6 +1,4 @@
-# LaTeX build artifacts (redirected to build/ by .latexmkrc, but ignore
-# stragglers too in case someone compiles without latexmk)
-build/
+# LaTeX build artifacts
 *.aux
 *.log
 *.out
